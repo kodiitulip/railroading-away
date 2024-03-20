@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://bte3k2128hjn6"]
+
+[ext_resource type="Script" path="res://Scenes/Tracks/track.gd" id="1_skqcy"]
+[ext_resource type="Texture2D" uid="uid://bpokio57mds1l" path="res://Assets/Railroad/track.png" id="2_053wk"]
+[ext_resource type="Texture2D" uid="uid://caon7fyvcv8lt" path="res://Assets/Railroad/crosstie.png" id="2_uur1c"]
+
+[sub_resource type="Curve2D" id="Curve2D_cswlp"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8)
+}
+point_count = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_0bgtm"]
+_surfaces = [{
+"2d": true,
+"aabb": AABB(-1.5, -13.5, 0, 3.00001, 27, 0),
+"attribute_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0),
+"format": 34393296913,
+"index_count": 6,
+"index_data": PackedByteArray(3, 0, 0, 0, 1, 0, 1, 0, 2, 0, 3, 0),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 192, 63, 0, 0, 88, 65, 0, 0, 192, 191, 0, 0, 88, 65, 0, 0, 192, 191, 0, 0, 88, 193, 0, 0, 192, 63, 0, 0, 88, 193)
+}]
+
+[sub_resource type="MultiMesh" id="MultiMesh_3tmmh"]
+resource_local_to_scene = true
+instance_count = 1
+mesh = SubResource("ArrayMesh_0bgtm")
+buffer = PackedFloat32Array(-4.37114e-08, -1, 0, 0, 1, -4.37114e-08, 0, 4)
+
+[node name="Track" type="Path2D"]
+z_index = 1
+z_as_relative = false
+curve = SubResource("Curve2D_cswlp")
+script = ExtResource("1_skqcy")
+
+[node name="Crosstie" type="MeshInstance2D" parent="."]
+visible = false
+mesh = SubResource("ArrayMesh_0bgtm")
+texture = ExtResource("2_uur1c")
+
+[node name="Crossties" type="MultiMeshInstance2D" parent="."]
+multimesh = SubResource("MultiMesh_3tmmh")
+texture = ExtResource("2_uur1c")
+
+[node name="Head" type="PathFollow2D" parent="."]
+rotation = 1.5708
+
+[node name="HeadMarker" type="Marker2D" parent="Head"]
+unique_name_in_owner = true
+
+[node name="Tail" type="PathFollow2D" parent="."]
+position = Vector2(0, 8)
+rotation = 1.5708
+progress = 8.0
+
+[node name="TailMarker" type="Marker2D" parent="Tail"]
+unique_name_in_owner = true
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 4, 0, 8)
+width = 20.0
+texture = ExtResource("2_053wk")
+texture_mode = 2

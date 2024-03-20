@@ -1,0 +1,107 @@
+[gd_scene load_steps=11 format=3 uid="uid://brvms7vcecb5k"]
+
+[ext_resource type="PackedScene" uid="uid://bte3k2128hjn6" path="res://Scenes/Tracks/track.tscn" id="1_afcx7"]
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_umqqj"]
+[ext_resource type="PackedScene" uid="uid://dwkfeq8nvuih8" path="res://Scenes/Tracks/track_switch.tscn" id="3_ocgn5"]
+[ext_resource type="PackedScene" uid="uid://cwe3xk42vnndp" path="res://Scenes/Tracks/train_depot.tscn" id="4_at065"]
+
+[sub_resource type="Curve2D" id="Curve2D_12roa"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(-0.0915318, -55.9942, 0, 0, -280, -192, 0, 0, 0, 64, -280, 64, -64, 0, 0, 0, -152, 184, 0, 0, 47.6758, 6.35678, -24, 184)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_xgnju"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(-41.4268, -9.79989, 0, 0, 8, 88, 0, 0, 64, 0, 200, 88, 0, 64, 0, 0, 328, -32)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_3gmqa"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(-0.812431, -46.6801, 0, 64, 0, -192, -64, 0, 0, 0, 128, -64, 0, 0, 64, 0, 192, -64, 0, -64, -64.4909, -0.586882, 320, 64)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_kbcbp"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(-4.44184, 65.2568, 0, -64, 32, 0, 64, 0, 0, 0, -96, -128, 0, 0, -64, 0, -224, -128, 0, -64, 0, 0, -352, 0)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_kgujd"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 32, -32, 0, 0, 0, -64, 32, -160, 64, 0, 0, 0, -96, -288, 0, 0, -64, 0, -288, -288, 0, -64, 0, 0, -416, -160, 0, 0, 0, 0, -416, -32)
+}
+point_count = 6
+
+[sub_resource type="Curve2D" id="Curve2D_bvt1i"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, -384, 0, 0, 0, 64, 0, 0, 0, -64, 0, 0, 15.9995, 128)
+}
+point_count = 3
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_umqqj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1336.0
+offset_top = -1120.0
+offset_right = 1056.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.235294, 0.619608, 0.305882, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-216, -128)
+zoom = Vector2(0.345, 0.345)
+
+[node name="Tracks" type="Node2D" parent="."]
+
+[node name="Track" parent="Tracks" instance=ExtResource("1_afcx7")]
+position = Vector2(-168, 0)
+curve = SubResource("Curve2D_12roa")
+
+[node name="Track2" parent="Tracks" instance=ExtResource("1_afcx7")]
+position = Vector2(-8, 96)
+curve = SubResource("Curve2D_xgnju")
+
+[node name="Track3" parent="Tracks" instance=ExtResource("1_afcx7")]
+curve = SubResource("Curve2D_3gmqa")
+
+[node name="Track4" parent="Tracks" instance=ExtResource("1_afcx7")]
+position = Vector2(-64, -384)
+curve = SubResource("Curve2D_kbcbp")
+
+[node name="Track5" parent="Tracks" instance=ExtResource("1_afcx7")]
+position = Vector2(-32, -352)
+curve = SubResource("Curve2D_kgujd")
+
+[node name="TrackSwitch" parent="Tracks" instance=ExtResource("3_ocgn5")]
+position = Vector2(0, -192)
+
+[node name="TrackSwitch2" parent="Tracks" instance=ExtResource("3_ocgn5")]
+position = Vector2(-448, -192)
+scale = Vector2(-1, 1)
+
+[node name="TrainDepot" parent="Tracks" instance=ExtResource("4_at065")]
+position = Vector2(-320, 232)
+rotation = -1.5708
+curve = SubResource("Curve2D_bvt1i")
+
+[node name="TrackSwitch3" parent="Tracks" instance=ExtResource("3_ocgn5")]
+position = Vector2(0, 184)
+rotation = -1.5708
+
+[connection signal="child_entered_tree" from="Tracks/TrainDepot" to="Tracks/TrainDepot" method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="Tracks/TrainDepot" to="Tracks/TrainDepot" method="_on_child_exiting_tree"]
